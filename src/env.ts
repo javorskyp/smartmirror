@@ -1,0 +1,1 @@
+export const websocketUrl = 'http://localhost:8080/ws';
