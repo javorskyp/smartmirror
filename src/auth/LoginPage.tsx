@@ -21,11 +21,9 @@ const LoginPage = () => {
       })
 
       console.log(response);
-    } catch (e) {
-      if (e && e.response) {
-        const axiosError = e as AxiosError<any>
-        console.log(axiosError.toJSON());
-        setError("Server Error");
+    } catch (error) {
+      if (error?.isAxiosError) {
+        setError((error as AxiosError).message);
 
         setTimeout(() => {
           setError(null)
