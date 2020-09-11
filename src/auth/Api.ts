@@ -1,18 +1,14 @@
-import Axios, { AxiosRequestConfig } from 'axios';
+import Axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { CredentialsDto } from '../interfaces/dto/credentials-dto.interface';
+import { TokenRo } from '../interfaces/ro/token-ro.interface';
+import { API } from '../env';
 
-export interface Credentials {
-    username: string;
-    password: string;
-}
-
-export const onLogin = async (data: Credentials) => {
+export const login = async (data: CredentialsDto): Promise<AxiosResponse<TokenRo>> => {
     const requestConfig: AxiosRequestConfig = {
         method: 'post',
-        url: '/auth/login',   /* może process.env.reactapp + login? */
+        url: `${API}/auth/authenticate`,
         data
-
     }
 
-    const {data: response} = await Axios.request(requestConfig);
-    console.log(response)
+    return await Axios.request<TokenRo>(requestConfig);
 }

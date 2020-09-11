@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TodoistTaskRo } from '../interfaces/todoist-task-ro.interface';
+import { TodoistTaskRo } from '../interfaces/ro/todoist-task-ro.interface';
 import { WebsocketConnection } from './../utils/websocket';
 
 function Websocket() {

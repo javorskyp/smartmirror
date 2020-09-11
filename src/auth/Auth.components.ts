@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const AuthForm = styled.form `
+export const AuthForm = styled.form`
 display: flex;
 align-items: center;
 flex-direction: column;

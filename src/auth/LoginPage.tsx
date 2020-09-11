@@ -1,47 +1,56 @@
 import React, { useState } from 'react';
 import { AuthForm } from './Auth.components';
-import { onLogin } from './Api'
+import { login } from './Api';
+import { AxiosError } from 'axios';
+import { CredentialsDto } from '../interfaces/dto/credentials-dto.interface';
 
 const LoginPage = () => {
-
-const [{username, password}, setCredentials] = useState({
-    username: '',
+  const [error, setError] = useState<string | null>()
+  const [{ email, password }, setCredentials] = useState<CredentialsDto>({
+    email: '',
     password: ''
-})
-
-const [error, setError] = useState('')
-
-const login = async (event: React.FormEvent) => {
-event.preventDefault();
-
-const response = await onLogin({
-    username,
-    password
   })
 
-  /*
-  if (response && response.error) {
-    setError(response.error);
-    not ready code with error
-  }*/
-}
+  const submit = async (event: React.FormEvent) => {
+    event.preventDefault();
 
-    return (
-      <AuthForm onSubmit={login}>
-          <label htmlFor="username">Username</label>
-          <input placeholder="Username" value={username} onChange={(event) => setCredentials ({
-              username: event.target.value,
-              password
-            })}/>
-          <label htmlFor="password">Password</label>
-          <input placeholder="Password" type="password" value={password} onChange={(event) => setCredentials ({
-              username,
-              password: event.target.value,
-            })}/>
-          <button type="submit">Login</button>
-         
-      </AuthForm>
-    )
+    try {
+      const response = await login({
+        email,
+        password
+      })
+
+      console.log(response);
+    } catch (e) {
+      if (e && e.response) {
+        const axiosError = e as AxiosError<any>
+        console.log(axiosError.toJSON());
+        setError("Server Error");
+
+        setTimeout(() => {
+          setError(null)
+        }, 2000);
+      }
+    }
+  }
+
+  return (
+    <AuthForm onSubmit={submit}>
+      <label htmlFor="email">Email</label>
+      <input placeholder="Email" value={email} onChange={(event) => setCredentials({
+        email: event.target.value,
+        password
+      })} />
+      <label htmlFor="password">Password</label>
+      <input placeholder="Password" type="password" value={password} onChange={(event) => setCredentials({
+        email,
+        password: event.target.value,
+      })} />
+      {error && <div>Jakiś błąd... {error}</div>}
+      <button type="submit">Login</button>
+
+    </AuthForm>
+  )
 
 }
 
