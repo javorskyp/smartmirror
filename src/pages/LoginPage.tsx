@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AuthForm } from '../auth/Auth.components';
-import { login } from '../auth/Api';
+import { login } from '../services/auth-service';
 import { AxiosError } from 'axios';
 import { CredentialsDto } from '../interfaces/dto/credentials-dto.interface';
 import { Link } from 'react-navi';
@@ -24,7 +24,7 @@ const LoginPage = () => {
       console.log(response);
     } catch (error) {
       if (error?.isAxiosError) {
-        setError((error as AxiosError).message);
+        setError((error as AxiosError).name);
 
         setTimeout(() => {
           setError(null)
