@@ -5,9 +5,21 @@ import { TokenRo } from '../interfaces/ro/token-ro.interface';
 export const login = async (data: CredentialsDto): Promise<AxiosResponse<TokenRo>> => {
     const requestConfig: AxiosRequestConfig = {
         method: 'post',
-        url: `/auth/authenticate`,
+        url: process.env.API + '/',
         data
     }
 
     return await Axios.request<TokenRo>(requestConfig);
 }
+
+export const register = async(data: CredentialsDto): Promise<AxiosResponse<TokenRo>> => {
+    const requestConfig: AxiosRequestConfig = {
+        method: 'post',
+        url: process.env.API + '/register',
+        data
+    }
+    
+    return await Axios.request<TokenRo>(requestConfig);
+}
+
+

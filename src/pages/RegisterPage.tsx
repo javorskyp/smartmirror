@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import {AuthForm } from './Auth.components';
-
+import {AuthForm } from '../auth/Auth.components';
+import { Link } from 'react-navi';
 
 const RegisterPage = () => {
 
@@ -13,12 +13,13 @@ const [{username, password, passwordrepeat}, setRegisterData] = useState({
 
 const [error, setError] = useState('')
 
-const register = (event: React.FormEvent) => {
+const register = async (event: React.FormEvent) => {
     event.preventDefault();
     if(password === passwordrepeat) {
-        //Api
+        //not finished register
+     
     } else {
-        setError('password & password repeat mus be the same')
+        setError('Password & password confirm must be the same')
     }
 
 }
@@ -37,14 +38,15 @@ const register = (event: React.FormEvent) => {
               password: event.target.value,
               passwordrepeat
             })}/>
-             <label htmlFor="passwordrepeat">Password</label>
-          <input value={passwordrepeat} name="passwordrepetat"  onChange={(event) => setRegisterData ({
+             <label htmlFor="passwordrepeat">Confirm password</label>
+          <input value={passwordrepeat} name="passwordrepetat" type="password" onChange={(event) => setRegisterData ({
               username,
               password,
               passwordrepeat: event.target.value,
             })}/>
           <button type="submit">Register</button>
          {error.length > 0 && <p>{error}</p>}
+         <p>Have an account? <Link href="/">Sign in</Link></p>
       </AuthForm>
     )
 }

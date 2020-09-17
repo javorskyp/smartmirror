@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { AuthForm } from './Auth.components';
-import { login } from './Api';
+import { AuthForm } from '../auth/Auth.components';
+import { login } from '../auth/Api';
 import { AxiosError } from 'axios';
 import { CredentialsDto } from '../interfaces/dto/credentials-dto.interface';
+import { Link } from 'react-navi';
 
 const LoginPage = () => {
   const [error, setError] = useState<string | null>()
@@ -46,7 +47,7 @@ const LoginPage = () => {
       })} />
       {error && <div>Jakiś błąd... {error}</div>}
       <button type="submit">Login</button>
-
+      <p>Don't have an account? <Link href="/register">Sign up</Link></p>
     </AuthForm>
   )
 
