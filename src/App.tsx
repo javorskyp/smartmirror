@@ -1,26 +1,40 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Websocket from './components/Websocket';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import TodoistOauthRedirectPage from './pages/TodoistOauthRedirectPage';
+import { CLIENT_ID, CLIENT_SECRET, SCOPE } from './env';
+import * as firebaseService from './services/firebase-serivce';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Websocket />
+      <button onClick={firebaseService.fetchGoogleToken}>
+        Google signin
+      </button>
+      <a href={`https://todoist.com/oauth/authorize?client_id=${CLIENT_ID}&scope=${SCOPE}&state=${CLIENT_SECRET}`}>
+        Link z OAuth dla todoist
+      </a>
+      <>
+        <div className="App">
+          <header className="App-header">
+            <Switch>
+              <Route exact path="/" component={LoginPage} />
+              <Route path="/register" component={RegisterPage} />
+              <Route path="/todoistoauthredirect" component={TodoistOauthRedirectPage} />
+            </Switch>
+          </header>
+        </div>
+      </>
+    </BrowserRouter>
   );
 }
+
+
+
 
 export default App;
