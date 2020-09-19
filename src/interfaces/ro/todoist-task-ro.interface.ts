@@ -1,26 +1,26 @@
 export interface TodoistTaskRo {
-    event_name: string;
-    user_id: number;
-    event_data: {
-        added_by_uid: string;
-        assigned_by_uid: string;
+    eventName: string;
+    userId: number;
+    eventData: {
+        addedByUid: string;
+        assignedByUid: string;
         checked: boolean;
-        child_order: number;
+        childOrder: number;
         collapsed: boolean;
         content: string;
-        date_added: string;
-        day_order: string;
+        dateAdded: string;
+        dayOrder: string;
         due: string;
-        has_notifications: string;
+        hasNotifications: string;
         id: number;
-        in_history: number;
-        is_deleted: boolean;
+        inHistory: number;
+        isDeleted: boolean;
         labels: string[];
-        parent_id: number;
+        parentId: number;
         priority: number;
-        project_id: number;
-        responsible_uid: number;
-        sync_id: number;
-        user_id: number;
+        projectId: number;
+        responsibleUid: number;
+        syncId: number;
+        userId: number;
     };
 }

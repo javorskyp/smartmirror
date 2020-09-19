@@ -8,7 +8,7 @@ function Websocket() {
     const socket = WebsocketConnection.getInstance();
 
     socket.connect({}, function (frame: any) {
-        socket.subscribe('/topic/tasks', tasks => {
+        socket.subscribe('/topic/jkwolanin@gmail.com', tasks => {
             const task = JSON.parse(tasks.body);
             console.log(task);
             setTask(task);
@@ -21,8 +21,8 @@ function Websocket() {
 
     return (
         <div>
-            <p>{task?.event_name}</p>
-            <p>{task?.event_data.content}</p>
+            <p>{task?.eventName}</p>
+            <p>{task?.eventData.content}</p>
             <button onClick={addNewTask}>Dodaj nowe zadanie websocketem</button>
         </div>
     );

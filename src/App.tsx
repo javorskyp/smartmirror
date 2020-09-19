@@ -1,23 +1,30 @@
 import React from 'react';
 import './App.css';
-import './components/Websocket';
+import Websocket from './components/Websocket';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import TodoistOauthRedirectPage from './pages/TodoistOauthRedirectPage';
+import { CLIENT_ID, CLIENT_SECRET, SCOPE } from './env';
 
 
 function App() {
   return (
     <BrowserRouter>
+      <Websocket />
+      <a href={`https://todoist.com/oauth/authorize?client_id=${CLIENT_ID}&scope=${SCOPE}&state=${CLIENT_SECRET}`}>
+        Trzeba coś napisać, żeby się wyświetliło.
+      </a>
       <>
-      <div className="App">
-        <header className="App-header">
-          <Switch>
-            <Route exact path="/" component={LoginPage}/>
-            <Route path="/register" component={RegisterPage}/>
-          </Switch>
-        </header>
-      </div>
+        <div className="App">
+          <header className="App-header">
+            <Switch>
+              <Route exact path="/" component={LoginPage} />
+              <Route path="/register" component={RegisterPage} />
+              <Route path="/todoistoauthredirect" component={TodoistOauthRedirectPage} />
+            </Switch>
+          </header>
+        </div>
       </>
     </BrowserRouter>
   );
