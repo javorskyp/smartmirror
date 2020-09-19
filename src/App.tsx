@@ -13,7 +13,7 @@ function App() {
     <BrowserRouter>
       <Websocket />
       <a href={`https://todoist.com/oauth/authorize?client_id=${CLIENT_ID}&scope=${SCOPE}&state=${CLIENT_SECRET}`}>
-        Trzeba coś napisać, żeby się wyświetliło.
+        Link z OAuth dla todoist
       </a>
       <>
         <div className="App">
