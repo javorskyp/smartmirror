@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AuthForm } from '../auth/Auth.components';
 import { Link } from 'react-navi';
-import * as authService from '../services/auth-service';
+import * as firebaseService from '../services/firebase-serivce';
 import { CredentialsDto } from '../interfaces/dto/credentials-dto.interface';
 import { AxiosError } from 'axios';
 import { ErrorRo } from '../interfaces/ro/error-ro.interface';
@@ -26,7 +26,7 @@ const RegisterPage = () => {
       };
 
       try {
-        const response = await authService.register(credentialsDto);
+        const response = await firebaseService.createUserWithEmailAndPassword(credentialsDto);
         console.log(response);
       } catch (error) {
         if (error?.isAxiosError) {

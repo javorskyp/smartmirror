@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AuthForm } from '../auth/Auth.components';
-import { login } from '../services/auth-service';
+import * as firebaseService from '../services/firebase-serivce';
 import { AxiosError } from 'axios';
 import { CredentialsDto } from '../interfaces/dto/credentials-dto.interface';
 import { Link } from 'react-navi';
@@ -15,22 +15,10 @@ const LoginPage = () => {
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    try {
-      const response = await login({
-        email,
-        password
-      })
-
-      console.log(response);
-    } catch (error) {
-      if (error?.isAxiosError) {
-        setError((error as AxiosError).name);
-
-        setTimeout(() => {
-          setError(null)
-        }, 2000);
-      }
-    }
+    firebaseService.loginUserWithEmailAndPassword({
+      email,
+      password
+    })
   }
 
   return (

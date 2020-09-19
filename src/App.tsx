@@ -6,12 +6,16 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import TodoistOauthRedirectPage from './pages/TodoistOauthRedirectPage';
 import { CLIENT_ID, CLIENT_SECRET, SCOPE } from './env';
+import * as firebaseService from './services/firebase-serivce';
 
 
 function App() {
   return (
     <BrowserRouter>
       <Websocket />
+      <button onClick={firebaseService.fetchGoogleToken}>
+        Google signin
+      </button>
       <a href={`https://todoist.com/oauth/authorize?client_id=${CLIENT_ID}&scope=${SCOPE}&state=${CLIENT_SECRET}`}>
         Link z OAuth dla todoist
       </a>
