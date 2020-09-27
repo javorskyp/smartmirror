@@ -17,13 +17,13 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 var provider = new firebase.auth.GoogleAuthProvider();
 
-export const fetchGoogleToken = () => {
-    firebase.auth().signInWithPopup(provider)
+export const fetchGoogleToken = async () => {
+    await firebase.auth().signInWithPopup(provider)
         .then((result: any) => {
             firebase.auth().currentUser?.getIdToken()
                 .then(async (idToken: string) => {
                     const response = await authService.fetchBackendToken(idToken);
-                    console.log(response.data.token);
+                    localStorage.setItem("token", response.data.token);
                 });
         })
         .catch((error) => {
@@ -47,7 +47,7 @@ export const loginUserWithEmailAndPassword = (data: CredentialsDto) => {
             firebase.auth().currentUser?.getIdToken()
                 .then(async (idToken: string) => {
                     const response = await authService.fetchBackendToken(idToken);
-                    console.log(response.data.token);
+                    localStorage.setItem("token", response.data.token);
                 });
         })
         .catch((error) => {
