@@ -1,23 +1,25 @@
 import React, { useEffect } from 'react';
-import { CLIENT_SECRET } from '../env';
-import * as authService from '../services/auth-service';
+import * as todoistService from '../services/todoist-service';
 import { AccessTokenRo } from '../interfaces/ro/access-token-ro.interface';
 import { AxiosResponse } from 'axios';
 
 const TodoistOauthRedirectPage = () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-    const state = urlParams.get('state');
-
     useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        const state = urlParams.get('state');
+
+        console.log(code);
+        console.log(state);
+
         if (!code) return;
 
-        authService.requestAccessToken(code)
+        todoistService.requestAccessToken(code)
             .then((response: AxiosResponse<AccessTokenRo>) => {
                 return response.data.access_token;
             })
-            .then((token: string) => {
-                authService.saveAccessToken(token);
+            .then(async (token: string) => {
+                todoistService.saveAccessToken(token);
             })
             .catch((error) => {
                 console.log(error);
@@ -26,8 +28,7 @@ const TodoistOauthRedirectPage = () => {
 
     return (
         <div>
-            {state !== CLIENT_SECRET ? 'Ktoś podmienił coś po drodze...' : 'OK'}
-            {window.URL}
+            ok
         </div>
     )
 
