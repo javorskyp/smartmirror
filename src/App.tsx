@@ -7,6 +7,7 @@ import TodoistOauthRedirectPage from './pages/TodoistOauthRedirectPage';
 import * as configService from './services/config-service';
 import AppStore from './pages/AppStore';
 import LoginPage from './pages/LoginPage';
+import GlobalStyle from './theme/GlobalStyle';
 
 const getConfiguration = async () => {
   console.log((await configService.fetchConfig()).data);
@@ -15,8 +16,7 @@ const getConfiguration = async () => {
 function App() {
   return (
     <BrowserRouter>
-      <a href="/login">Zaloguj</a>
-      <a href="/appstore">App Store</a>
+    <GlobalStyle/>
       <div className="App">
         <header className="App-header">
           <Switch>

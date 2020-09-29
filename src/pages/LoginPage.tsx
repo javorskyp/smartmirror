@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { AuthForm } from '../auth/Auth.components';
-import * as firebaseService from '../services/firebase-serivce';
-import { CredentialsDto } from '../interfaces/dto/credentials-dto.interface';
 import { Link } from 'react-navi';
 import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
 import * as actionTypes from '../store/actionTypes/action-types';
+import { AuthForm, Input, Button, UpperLeftCorner, ULCTitle, TitleLineUp, TitleLineDown } from '../components/Auth.components';
+import * as firebaseService from '../services/firebase-serivce';
+import { CredentialsDto } from '../interfaces/dto/credentials-dto.interface';
+import { GoogleIcon } from '../assets/GoogleIcon';
 
 const LoginPage = (props) => {
   let history = useHistory();
@@ -20,7 +21,6 @@ const LoginPage = (props) => {
       await firebaseService.fetchGoogleToken();
       history.push("/");
     } catch (e) {
-
     }
   }
 
@@ -34,33 +34,34 @@ const LoginPage = (props) => {
           }) */
   }
 
+
+
   return (
     <div>
-      <span>{props.loggedIn}</span>
-      <button onClick={submit}>Dispatch</button>
-
+      <UpperLeftCorner>
+        <ULCTitle>LOGOWANIE</ULCTitle>
+        <TitleLineUp />
+        <TitleLineDown />
+      </UpperLeftCorner>
       <AuthForm onSubmit={submit}>
-        <label htmlFor="email">Email</label>
-        <input placeholder="Email" value={email} onChange={(event) => setCredentials({
+        <Input placeholder="Email" value={email} onChange={(event: { target: { value: any; }; }) => setCredentials({
           email: event.target.value,
           password
         })} />
-        <label htmlFor="password">Password</label>
-        <input placeholder="Password" type="password" value={password} onChange={(event) => setCredentials({
+        <Input placeholder="Password" type="password" value={password} onChange={(event: { target: { value: any; }; }) => setCredentials({
           email,
           password: event.target.value,
         })} />
         {error && <div>Jakiś błąd... {error}</div>}
-        <button type="submit">Login</button>
+        <Button type="submit">Login</Button>
         <p>Don't have an account? <Link href="/register">Sign up</Link></p>
-      </AuthForm>
-
-      <button onClick={handleGoogleSignIn}>
+        <Button onClick={handleGoogleSignIn} >
+          <GoogleIcon />
         Google signin
-      </button>
+        </Button>
+      </AuthForm>
     </div>
   )
-
 }
 
 const mapStateToProps = state => {
