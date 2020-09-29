@@ -1,5 +1,4 @@
 export interface SocialIconProps {
-    width?: number,
-    height?: number,
-    viewBox?: number[];
+    width: number,
+    height: number
 }
