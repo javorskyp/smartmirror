@@ -41,16 +41,24 @@ export const createUserWithEmailAndPassword = (data: CredentialsDto) => {
         });
 }
 
-export const loginUserWithEmailAndPassword = (data: CredentialsDto) => {
-    firebase.auth().signInWithEmailAndPassword(data.email, data.password)
-        .then((result) => {
-            firebase.auth().currentUser?.getIdToken()
-                .then(async (idToken: string) => {
-                    const response = await authService.fetchBackendToken(idToken);
-                    localStorage.setItem("token", response.data.token);
-                });
-        })
-        .catch((error) => {
+export const loginUserWithEmailAndPassword = async (data: CredentialsDto) => {
+    await firebase.auth().signInWithEmailAndPassword(data.email, data.password);
+    const idToken = await firebase.auth().currentUser?.getIdToken();
+    if (!idToken) {
+        throw Error("Nie ma tokenu - TODO");
+    }
+    const response = await authService.fetchBackendToken(idToken);
+    localStorage.setItem("token", response.data.token);
+    return response;
 
-        });
+    /*         .then((result) => {
+                firebase.auth().currentUser?.getIdToken()
+                    .then(async (idToken: string) => {
+                        const response = await authService.fetchBackendToken(idToken);
+                        localStorage.setItem("token", response.data.token);
+                    });
+            })
+            .catch((error) => {
+    
+            }); */
 }

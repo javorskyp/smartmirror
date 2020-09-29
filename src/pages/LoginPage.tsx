@@ -4,8 +4,10 @@ import * as firebaseService from '../services/firebase-serivce';
 import { CredentialsDto } from '../interfaces/dto/credentials-dto.interface';
 import { Link } from 'react-navi';
 import { useHistory } from "react-router-dom";
+import { connect } from 'react-redux';
+import * as actionTypes from '../store/actionTypes/action-types';
 
-const LoginPage = () => {
+const LoginPage = (props) => {
   let history = useHistory();
   const [error, setError] = useState<string | null>()
   const [{ email, password }, setCredentials] = useState<CredentialsDto>({
@@ -25,14 +27,18 @@ const LoginPage = () => {
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    firebaseService.loginUserWithEmailAndPassword({
-      email,
-      password
-    })
+    props.login(email, password);
+    /*       firebaseService.loginUserWithEmailAndPassword({
+            email,
+            password
+          }) */
   }
 
   return (
     <div>
+      <span>{props.loggedIn}</span>
+      <button onClick={submit}>Dispatch</button>
+
       <AuthForm onSubmit={submit}>
         <label htmlFor="email">Email</label>
         <input placeholder="Email" value={email} onChange={(event) => setCredentials({
@@ -57,4 +63,16 @@ const LoginPage = () => {
 
 }
 
-export default LoginPage;
+const mapStateToProps = state => {
+  return {
+    loggedIn: state.auth.loggedIn
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    login: (email: string, password: string) => dispatch({ type: actionTypes.LOGIN, email: email, password: password })
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

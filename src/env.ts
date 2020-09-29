@@ -1,6 +1,6 @@
 export const websocketUrl = 'http://localhost:8080/ws';
 // export const API = 'https://acider.herokuapp.com';
-export const API = 'http://localhost:8080';
+export const API = 'https://acider.herokuapp.com';
 
 //TODOIST 
 export const CLIENT_ID = 'ae0493e9bfe54c37916f89070255b3a7';
