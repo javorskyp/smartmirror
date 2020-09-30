@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-navi';
 import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
-import * as actionTypes from '../store/actionTypes/action-types';
+import * as actions from '../store/actions/auth-actions';
 import { AuthForm, Input, Button, UpperLeftCorner, ULCTitle, TitleLineUp, TitleLineDown } from '../components/Auth.components';
 import * as firebaseService from '../services/firebase-serivce';
 import { CredentialsDto } from '../interfaces/dto/credentials-dto.interface';
@@ -27,14 +27,8 @@ const LoginPage = (props) => {
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    props.login(email, password);
-    /*       firebaseService.loginUserWithEmailAndPassword({
-            email,
-            password
-          }) */
+    props.login({ email, password });
   }
-
-
 
   return (
     <div>
@@ -66,13 +60,13 @@ const LoginPage = (props) => {
 
 const mapStateToProps = state => {
   return {
-    loggedIn: state.auth.loggedIn
+    loggedIn: state.authReducer.loggedIn
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    login: (email: string, password: string) => dispatch({ type: actionTypes.LOGIN, email: email, password: password })
+    login: (loginData: CredentialsDto) => dispatch(actions.login(loginData))
   }
 }
 
