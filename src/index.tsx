@@ -10,6 +10,7 @@ import rootReducer from './store';
 import { applyMiddleware, createStore, compose } from 'redux'
 import createSageMiddleware from 'redux-saga';
 import { watchAuth } from './store/indexEffects';
+import * as actions from '../src/store/actions/auth-actions';
 
 const sagaMiddleware = createSageMiddleware();
 
@@ -22,6 +23,8 @@ const store = createStore(rootReducer, composeEnhancers(
 sagaMiddleware.run(watchAuth);
 
 Axios.defaults.baseURL = API;
+
+store.dispatch(actions.initUserData());
 
 ReactDOM.render(
   <Provider store={store}>

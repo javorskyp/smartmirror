@@ -3,6 +3,9 @@ import "firebase/auth";
 import "firebase/firestore";
 import * as authService from '../services/auth-service';
 import { CredentialsDto } from "../interfaces/dto/credentials-dto.interface";
+import { AccessTokenDto } from "../interfaces/dto/access-token-dto.interface";
+import { TokenRo } from "../interfaces/ro/token-ro.interface";
+import { AxiosResponse } from "axios";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAfGo1jyIsq4zJJmrgZZhtnjgrgDYISEQI",
@@ -23,7 +26,6 @@ export const fetchGoogleToken = async () => {
             firebase.auth().currentUser?.getIdToken()
                 .then(async (idToken: string) => {
                     const response = await authService.fetchBackendToken(idToken);
-                    localStorage.setItem("token", response.data.token);
                 });
         })
         .catch((error) => {
@@ -41,24 +43,11 @@ export const createUserWithEmailAndPassword = (data: CredentialsDto) => {
         });
 }
 
-export const loginUserWithEmailAndPassword = async (data: CredentialsDto) => {
+export const loginUserWithEmailAndPassword = async (data: CredentialsDto): Promise<TokenRo> => {
     await firebase.auth().signInWithEmailAndPassword(data.email, data.password);
     const idToken = await firebase.auth().currentUser?.getIdToken();
     if (!idToken) {
         throw Error("Nie ma tokenu - TODO");
     }
-    const response = await authService.fetchBackendToken(idToken);
-    localStorage.setItem("token", response.data.token);
-    return response;
-
-    /*         .then((result) => {
-                firebase.auth().currentUser?.getIdToken()
-                    .then(async (idToken: string) => {
-                        const response = await authService.fetchBackendToken(idToken);
-                        localStorage.setItem("token", response.data.token);
-                    });
-            })
-            .catch((error) => {
-    
-            }); */
+    return (await authService.fetchBackendToken(idToken)).data;
 }
