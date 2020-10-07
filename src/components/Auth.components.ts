@@ -38,11 +38,12 @@ opacity: 1;
 
 `
 export const Button = styled.button `
-width: 245px;
+display: inline-block;
+width: 235px;
 height: 38px;
 font-size: 1em;
-margin: 1em;
-padding: 0.25em 1em;
+margin: 1em auto;
+padding: 1px;
 border-radius: 1px;
 background: black;
 color: var(--LightThemeSpi);
@@ -51,12 +52,17 @@ border: 1px solid #32dfff;
 cursor: pointer;
 }
 `
+export const ButtonTitleDiv = styled.div `
+display: flex;
+align-items: center;
+justify-content: center;
+`
 
 export const Input = styled.input `
 font-size: 15px;
 margin: 1em;
 height: 38px;
-width: 245px;
+width: 235px;
 padding: 10px;
 background: #000000 0% 0% no-repeat padding-box;
 border: 1px solid #32dfff;
