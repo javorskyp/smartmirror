@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from 'react';
 import { SocialIconProps } from './types';
 
-export const GoogleIcon: FunctionComponent<Partial<SocialIconProps>> = ({ width = 20, height = 20 }) => <svg
+export const GoogleIcon: FunctionComponent<Partial<SocialIconProps>> = ({ width = 30, height = 30 }) => <svg
     width={width}
     height={height}
-    viewBox="0, 0, 48, 48"
+    viewBox="0, -8, 88, 68"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
 >
@@ -28,7 +28,7 @@ export const GoogleIcon: FunctionComponent<Partial<SocialIconProps>> = ({ width 
     </g>
     <defs>
         <clipPath id="clip0">
-            <rect width="48" height="48" fill="white" />
+            <rect width="68" height="58" fill="white" />
         </clipPath>
     </defs>
 </svg>

@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Websocket from './components/Websocket';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect, Link } from 'react-router-dom';
 import RegisterPage from './pages/RegisterPage';
 import TodoistOauthRedirectPage from './pages/TodoistOauthRedirectPage';
 import * as configService from './services/config-service';
@@ -29,8 +29,10 @@ const App = (props) => {
   </Switch>;
 
   return (
+    
     <BrowserRouter>
       <GlobalStyle />
+      <p>Choose authlogin <Link to="/appstore">Appstore</Link></p>
       <div className="App">
         <header className="App-header">
           {props.loggedIn ? authRoutes : unauthRoutes}
