@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-navi';
+import { connect } from 'react-redux';
+import * as actions from '../store/actions/auth-actions';
 import { useHistory } from "react-router-dom";
 import { AuthForm, Input, Button, UpperLeftCorner, ULCTitle, TitleLineUp, TitleLineDown, ButtonTitleDiv } from '../components/Auth.components';
 import * as firebaseService from '../services/firebase-serivce';
 import { CredentialsDto } from '../interfaces/dto/credentials-dto.interface';
 import { GoogleIcon } from '../assets/GoogleIcon';
 
-const LoginPage = () => {
+const LoginPage = (props) => {
   let history = useHistory();
   const [error, setError] = useState<string | null>()
   const [{ email, password }, setCredentials] = useState<CredentialsDto>({
@@ -24,11 +26,8 @@ const LoginPage = () => {
 
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
-
-    firebaseService.loginUserWithEmailAndPassword({
-      email,
-      password
-    })
+    props.login({ email, password });
+   
   }
  
   return (
@@ -61,4 +60,16 @@ const LoginPage = () => {
   )
 }
 
-export default LoginPage;
+const mapStateToProps = state => {
+  return {
+    loggedIn: state.authReducer.loggedIn
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    login: (loginData: CredentialsDto) => dispatch(actions.login(loginData))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
