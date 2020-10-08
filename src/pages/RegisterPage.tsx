@@ -49,7 +49,7 @@ const RegisterPage = () => {
   return (
     <div>
     <UpperLeftCorner>
-        <ULCTitle>REJESTRACJA</ULCTitle>
+        <ULCTitle>REGISTER</ULCTitle>
         <TitleLineUp/>
         <TitleLineDown/>
       </UpperLeftCorner>
