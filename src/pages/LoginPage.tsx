@@ -10,8 +10,8 @@ import { GoogleIcon } from '../assets/GoogleIcon';
 
 const LoginPage = (props) => {
   let history = useHistory();
-  const [error, setError] = useState<string | null>()
-  const [{ email, password }, setCredentials] = useState<CredentialsDto>({
+  const [emailError, setEmailError] = useState<string>();
+  const [credencials, setCredentials] = useState<CredentialsDto>({
     email: '',
     password: ''
   })
@@ -21,13 +21,27 @@ const LoginPage = (props) => {
       await firebaseService.fetchGoogleToken();
       history.push("/");
     } catch (e) {
+
     }
+  }
+
+  const handleInput = (event) => {
+    props.error && props.clearResponseError();
+
+    setCredentials({
+      ...credencials,
+      [event.target.name]: event.target.value
+    })
   }
 
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
-    props.login({ email, password });
-   
+
+    if (!credencials.email.includes('@')) {
+      return setEmailError('Email nie zawiera @');
+    }
+    
+    props.login(credencials);
   }
  
   return (
@@ -38,16 +52,12 @@ const LoginPage = (props) => {
         <TitleLineDown/>
       </UpperLeftCorner>
       <AuthForm onSubmit={submit}>
-        <Input placeholder="Email" value={email} onChange={(event: { target: { value: any; }; }) => setCredentials({
-          email: event.target.value,
-          password
-        })} />
-        <Input placeholder="Password" type="password" value={password} onChange={(event: { target: { value: any; }; }) => setCredentials({
-          email,
-          password: event.target.value,
-        })} />
-        {error && <div>Jakiś błąd... {error}</div>}
+        <Input placeholder="Email" name="email" value={credencials.email} onChange={handleInput} />
+        {emailError}
+        <Input placeholder="Password" name="password" type="password" value={credencials.password} onChange={handleInput} />
+        {props.error && <div>Błąd: {props.error}</div>}
         <Button type="submit">Login</Button>
+        {props.isLoading && <div>Wczytywanie... Niewidzialny spinner</div>}
         <p>Don't have an account? <Link href="/register">Sign up</Link></p>
         <Button onClick={handleGoogleSignIn} >
           <ButtonTitleDiv>
@@ -62,13 +72,16 @@ const LoginPage = (props) => {
 
 const mapStateToProps = state => {
   return {
-    loggedIn: state.authReducer.loggedIn
+    loggedIn: state.authReducer.loggedIn,
+    error: state.authReducer.loginFailureMessage,
+    isLoading: state.authReducer.isLoading
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    login: (loginData: CredentialsDto) => dispatch(actions.login(loginData))
+    login: (loginData: CredentialsDto) => dispatch(actions.login(loginData)),
+    clearResponseError: () => dispatch(actions.clearResponseError())
   }
 }
 
