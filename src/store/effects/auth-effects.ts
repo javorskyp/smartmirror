@@ -5,11 +5,15 @@ import * as firebaseService from '../../services/firebase-serivce';
 import * as actions from '../actions/auth-actions';
 
 export function* login(action: actions.LoginAction) {
-    const response: TokenRo = yield firebaseService.loginUserWithEmailAndPassword({
-        "email": action.loginData.email,
-        "password": action.loginData.password
-    });
-    yield put(actions.loginSuccess(response));
+    try {
+        const response: TokenRo = yield firebaseService.loginUserWithEmailAndPassword({
+            "email": action.loginData.email,
+            "password": action.loginData.password
+        });
+        yield put(actions.loginSuccess(response));
+    } catch (e) {
+        yield put(actions.loginFailure(e.message));
+    }
 }
 
 export function* loginSuccess(action: actions.LoginSuccessAction) {
