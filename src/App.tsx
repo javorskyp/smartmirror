@@ -1,14 +1,14 @@
 import React from 'react';
-import './App.css';
-import Websocket from './components/Websocket';
-import { BrowserRouter, Route, Switch, Redirect, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import RegisterPage from './pages/RegisterPage';
 import TodoistOauthRedirectPage from './pages/TodoistOauthRedirectPage';
 import * as configService from './services/config-service';
 import AppStore from './pages/AppStore';
 import LoginPage from './pages/LoginPage';
 import GlobalStyle from './theme/GlobalStyle';
-import { connect } from 'react-redux';
+import { LandingPage } from './pages/LandingPage';
+
 
 const getConfiguration = async () => {
   console.log((await configService.fetchConfig()).data);
@@ -22,7 +22,7 @@ const App = (props) => {
   </Switch>;
 
   const authRoutes = <Switch>
-    <Route exact path="/" component={Websocket} />
+    <Route exact path="/" component={LandingPage} />
     <Route path="/appstore" component={AppStore} />
     <Route path="/todoistoauthredirect" component={TodoistOauthRedirectPage} />
     <Redirect to="/" />
@@ -32,11 +32,10 @@ const App = (props) => {
     
     <BrowserRouter>
       <GlobalStyle />
-      <p>Choose authlogin <Link to="/appstore">Appstore</Link></p>
       <div className="App">
         <header className="App-header">
           {props.loggedIn ? authRoutes : unauthRoutes}
-        </header>
+        </header> 
       </div>
     </BrowserRouter >
   );
