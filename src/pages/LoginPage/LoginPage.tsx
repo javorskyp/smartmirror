@@ -1,28 +1,17 @@
-import React, { useState } from 'react';
-import { Link } from 'react-navi';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/auth-actions';
 import { useHistory } from "react-router-dom";
-import { AuthForm, Input, Button, UpperLeftCorner, ULCTitle, TitleLineUp, TitleLineDown, ButtonTitleDiv } from './styled';
+import { Button, UpperLeftCorner, ULCTitle, TitleLineUp, TitleLineDown, ButtonTitleDiv, StyledForm } from './styled';
 import * as firebaseService from '../../services/firebase-serivce';
 import { CredentialsDto } from '../../interfaces/dto/credentials-dto.interface';
 import { GoogleIcon } from '../../assets/GoogleIcon';
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
 
 const LoginPage = (props) => {
   let history = useHistory();
-  const [emailError, setEmailError] = useState<string>();
-  const [credencials, setCredentials] = useState({
-    email: {
-      value: '',
-      touched: '',
-      valid: true
-    },
-    password: {
-      value: '',
-      touched: '',
-      valid: true
-    }
-  })
 
   async function handleGoogleSignIn() {
     try {
@@ -33,88 +22,54 @@ const LoginPage = (props) => {
     }
   }
 
-  const handleInput = (event) => {
-    event.persist();
-    props.error && props.clearResponseError();
-
-    setCredentials((prevState) => ({
-      ...prevState,
-      [event.target.name]: {
-        ...prevState[event.target.name],
-        value: event.target.value
-      }
-    }));
-
-    if (event.target.name === 'email' && !event.target.value.includes('@')) {
-      setCredentials((prevState) => ({
-        ...prevState,
-        [event.target.name]: {
-          ...prevState[event.target.name],
-          valid: false
-        }
-      }));
-
-      setEmailError('Email nie zawiera @');
-    } else {
-      setCredentials((prevState) => ({
-        ...prevState,
-        [event.target.name]: {
-          ...prevState[event.target.name],
-          valid: true
-        }
-      }));
-
-      setEmailError('');
-    }
-  }
-
-  const handleBlur = (event) => {
-    event.persist();
-
-    setCredentials((prevState) => ({
-      ...prevState,
-      [event.target.name]: {
-        ...prevState[event.target.name],
-        touched: true
-      }
-    }));
-  }
-
-  const submit = async (event: React.FormEvent) => {
-    event.preventDefault();
-
-    props.login({
-      email: credencials.email.value,
-      password: credencials.password.value
-    });
-  }
+  const SignupSchema = Yup.object().shape({
+    email: Yup.string().email('Invalid email').required('Required'),
+    password: Yup.string()
+      .min(1, 'Too Short!')
+      .required('Required')
+  });
 
   return (
-    <div>
+    <StyledForm>
       <UpperLeftCorner>
         <ULCTitle>LOGIN</ULCTitle>
         <TitleLineUp />
         <TitleLineDown />
       </UpperLeftCorner>
-      <AuthForm onSubmit={submit}>
-        <Input placeholder="Email" name="email" value={credencials.email.value} onChange={handleInput} onBlur={handleBlur} valid={credencials.email.valid} />
-        {(emailError && credencials.email.touched) && emailError}
 
-        <Input placeholder="Password" name="password" type="password" value={credencials.password.value} onChange={handleInput} onBlur={handleBlur} valid={credencials.password.valid} />
-        {props.error && <div>Błąd: {props.error}</div>}
+      <Formik
+        initialValues={{
+          email: '',
+          password: ''
+        }}
+        validationSchema={SignupSchema}
+        onSubmit={values => {
+          props.login(values);
+        }}
+      >
+        {({ errors, touched }) => (
 
-        <Button type="submit">Login</Button>
-        {props.isLoading && <div>Wczytywanie...</div>}
+          <Form>
+            <Field name="email" type="email" placeholder="Email" />
+            {errors.email && touched.email ? <div>{errors.email}</div> : null}
+            <Field name="password" placeholder="Password" type="password" />
+            {errors.password && touched.password ? (
+              <div>{errors.password}</div>
+            ) : null}
+            <button type="submit">Login</button>
+            {props.isLoading && <div>Wczytywanie...</div>}
+          </Form>
+        )}
+      </Formik>
 
-        <Button onClick={handleGoogleSignIn} >
-          <ButtonTitleDiv>
-            <GoogleIcon />
+      <Button onClick={handleGoogleSignIn} >
+        <ButtonTitleDiv>
+          <GoogleIcon />
               Google Signin
           </ButtonTitleDiv>
-        </Button>
-        <p>Don't have an account? <Link href="/register">Sign up</Link></p>
-      </AuthForm>
-    </div>
+      </Button>
+      <p>Don't have an account? <Link to="/register">Sign up</Link></p>
+    </StyledForm>
   )
 }
 

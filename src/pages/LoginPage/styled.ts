@@ -1,10 +1,51 @@
 import styled from 'styled-components'
 
-export const AuthForm = styled.form`
-display: flex;
-align-items: center;
-flex-direction: column;
-margin-top: 50px;
+export const StyledForm = styled.div`
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 50px;
+
+    form {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        margin-top: 50px;
+    
+        input {
+            font-size: 15px;
+            margin: 1em;
+            height: 38px;
+            width: 235px;
+            padding: 10px;
+            background: #000000 0% 0% no-repeat padding-box;
+            border: 1px solid white;
+            opacity: 1;
+            color: white;
+            :hover {
+            cursor: pointer;
+            }
+            :focus {
+            background: black;
+            }
+        }
+
+        button {
+            display: inline-block;
+            width: 235px;
+            height: 38px;
+            font-size: 1em;
+            margin: 1em auto;
+            padding: 1px;
+            border-radius: 1px;
+            background: black;
+            color: var(--ThemeColor);
+            border: 1px solid white;
+            :hover {
+            cursor: pointer;
+            }
+        }
+    }
 `;
 
 export const UpperLeftCorner = styled.div`
@@ -56,22 +97,4 @@ export const ButtonTitleDiv = styled.div`
 display: flex;
 align-items: center;
 justify-content: center;
-`
-
-export const Input = styled.input`
-font-size: 15px;
-margin: 1em;
-height: 38px;
-width: 235px;
-padding: 10px;
-background: #000000 0% 0% no-repeat padding-box;
-border: ${props => props.valid ? '1px solid white' : '1px solid red'} ;
-opacity: 1;
-color: white;
-:hover {
-cursor: pointer;
-}
-:focus {
-background: black;
-}
 `
