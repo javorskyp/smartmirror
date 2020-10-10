@@ -8,11 +8,18 @@ import AppStore from './pages/AppStore';
 import LoginPage from './pages/LoginPage';
 import GlobalStyle from './theme/GlobalStyle';
 import { LandingPage } from './pages/LandingPage';
-
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 const getConfiguration = async () => {
   console.log((await configService.fetchConfig()).data);
 }
+
+const StyledLink = styled.p`
+    & > * {
+        color: white;
+    }
+`
 
 const App = (props) => {
   const unauthRoutes = <Switch>
@@ -28,14 +35,25 @@ const App = (props) => {
     <Redirect to="/" />
   </Switch>;
 
+  const authLinks = <div>
+    <StyledLink><Link to="/appstore">Appstore</Link></StyledLink>
+  </div>
+
+  const unauthLinks = <div>
+
+  </div>
+
   return (
-    
+
     <BrowserRouter>
       <GlobalStyle />
-      <div className="App">
-        <header className="App-header">
+      <div>
+        <header>
+          {props.loggedIn ? authLinks : unauthLinks}
+        </header>
+        <div>
           {props.loggedIn ? authRoutes : unauthRoutes}
-        </header> 
+        </div>
       </div>
     </BrowserRouter >
   );
