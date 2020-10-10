@@ -3,23 +3,11 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import RegisterPage from './pages/RegisterPage';
 import TodoistOauthRedirectPage from './pages/TodoistOauthRedirectPage';
-import * as configService from './services/config-service';
 import AppStore from './pages/AppStore';
-import LoginPage from './pages/LoginPage';
+import LoginPage from './pages/LoginPage/LoginPage';
 import GlobalStyle from './theme/GlobalStyle';
 import { LandingPage } from './pages/LandingPage';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-
-const getConfiguration = async () => {
-  console.log((await configService.fetchConfig()).data);
-}
-
-const StyledLink = styled.p`
-    & > * {
-        color: white;
-    }
-`
+import CustomMenu from './components/CustomMenu/CustomMenu';
 
 const App = (props) => {
   const unauthRoutes = <Switch>
@@ -35,22 +23,12 @@ const App = (props) => {
     <Redirect to="/" />
   </Switch>;
 
-  const authLinks = <div>
-    <StyledLink><Link to="/appstore">Appstore</Link></StyledLink>
-  </div>
-
-  const unauthLinks = <div>
-
-  </div>
-
   return (
 
     <BrowserRouter>
       <GlobalStyle />
       <div>
-        <header>
-          {props.loggedIn ? authLinks : unauthLinks}
-        </header>
+        <CustomMenu loggedIn={props.loggedIn} />
         <div>
           {props.loggedIn ? authRoutes : unauthRoutes}
         </div>

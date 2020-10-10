@@ -1,7 +1,8 @@
-import { put } from 'redux-saga/effects';
+import { all, put } from 'redux-saga/effects';
 import { TokenRo } from '../../interfaces/ro/token-ro.interface';
 
 import * as firebaseService from '../../services/firebase-serivce';
+import * as configService from '../../services/config-service';
 import * as actions from '../actions/auth-actions';
 
 export function* login(action: actions.LoginAction) {
@@ -23,6 +24,18 @@ export function* loginSuccess(action: actions.LoginSuccessAction) {
 export function* initUserData() {
     const token: string = yield localStorage.getItem("token");
     if (token) {
-        yield put(actions.initUserDataSuccess({ token }));
+        yield all([
+            put(actions.initUserDataSuccess({ token })),
+            put(actions.fetchConfiguration())
+        ])
+    }
+}
+
+export function* fetchConfiguration(action) {
+    try {
+        const response = yield configService.fetchConfig();
+        yield put(actions.configurationFetched(response.data));
+    } catch (e) {
+
     }
 }

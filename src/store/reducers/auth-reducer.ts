@@ -1,4 +1,3 @@
-import { loginFailure } from '../actions/auth-actions';
 import * as actionTypes from '../actionTypes/action-types';
 
 type InitialState = {
@@ -6,13 +5,15 @@ type InitialState = {
     token: string | null;
     loginFailureMessage: string | null;
     isLoading: boolean;
+    configuration: any;
 }
 
 const initialState: InitialState = {
     loggedIn: false,
     token: null,
     loginFailureMessage: null,
-    isLoading: false
+    isLoading: false,
+    configuration: null
 }
 
 export const authReducer = (state = initialState, action): InitialState => {
@@ -45,6 +46,11 @@ export const authReducer = (state = initialState, action): InitialState => {
                 ...state,
                 token: action.tokenData.token,
                 loggedIn: true
+            }
+        case actionTypes.CONFIGURATION_FETCHED:
+            return {
+                ...state,
+                configuration: action.configuration
             }
         default:
             return state;

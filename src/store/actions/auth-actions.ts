@@ -39,6 +39,19 @@ export function initUserDataSuccess(tokenData: { token: string }) {
     }
 }
 
+export function fetchConfiguration() {
+    return {
+        type: actionTypes.FETCH_CONFIGURATION
+    }
+}
+
+export function configurationFetched(configuration: any) {
+    return {
+        type: actionTypes.CONFIGURATION_FETCHED,
+        configuration
+    }
+}
+
 export function clearResponseError() {
     return {
         type: actionTypes.CLEAR_RESPONSE_ERROR,

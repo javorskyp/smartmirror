@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-navi';
 import { connect } from 'react-redux';
-import * as actions from '../store/actions/auth-actions';
+import * as actions from '../../store/actions/auth-actions';
 import { useHistory } from "react-router-dom";
-import { AuthForm, Input, Button, UpperLeftCorner, ULCTitle, TitleLineUp, TitleLineDown, ButtonTitleDiv } from '../components/Auth.components';
-import * as firebaseService from '../services/firebase-serivce';
-import { CredentialsDto } from '../interfaces/dto/credentials-dto.interface';
-import { GoogleIcon } from '../assets/GoogleIcon';
+import { AuthForm, Input, Button, UpperLeftCorner, ULCTitle, TitleLineUp, TitleLineDown, ButtonTitleDiv } from './styled';
+import * as firebaseService from '../../services/firebase-serivce';
+import { CredentialsDto } from '../../interfaces/dto/credentials-dto.interface';
+import { GoogleIcon } from '../../assets/GoogleIcon';
 
 const LoginPage = (props) => {
   let history = useHistory();
