@@ -3,16 +3,11 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import RegisterPage from './pages/RegisterPage';
 import TodoistOauthRedirectPage from './pages/TodoistOauthRedirectPage';
-import * as configService from './services/config-service';
 import AppStore from './pages/AppStore';
-import LoginPage from './pages/LoginPage';
+import LoginPage from './pages/LoginPage/LoginPage';
 import GlobalStyle from './theme/GlobalStyle';
 import { LandingPage } from './pages/LandingPage';
-
-
-const getConfiguration = async () => {
-  console.log((await configService.fetchConfig()).data);
-}
+import CustomMenu from './components/CustomMenu/CustomMenu';
 
 const App = (props) => {
   const unauthRoutes = <Switch>
@@ -29,13 +24,14 @@ const App = (props) => {
   </Switch>;
 
   return (
-    
+
     <BrowserRouter>
       <GlobalStyle />
-      <div className="App">
-        <header className="App-header">
+      <div>
+        <CustomMenu loggedIn={props.loggedIn} />
+        <div>
           {props.loggedIn ? authRoutes : unauthRoutes}
-        </header> 
+        </div>
       </div>
     </BrowserRouter >
   );

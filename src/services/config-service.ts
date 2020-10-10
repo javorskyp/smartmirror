@@ -2,7 +2,7 @@ import Axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export const fetchConfig = async (): Promise<AxiosResponse<any>> => {
     const requestConfig: AxiosRequestConfig = {
-        method: 'post',
+        method: 'get',
         url: `/config`,
         headers: {
             "Authorization": `Bearer ${localStorage.getItem("token")}`

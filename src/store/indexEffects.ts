@@ -7,4 +7,5 @@ export function* watchAuth() {
     yield takeEvery(actionTypes.LOGIN, effects.login);
     yield takeEvery(actionTypes.LOGIN_SUCCESS, effects.loginSuccess);
     yield takeEvery(actionTypes.INIT_USER_DATA, effects.initUserData);
+    yield takeEvery(actionTypes.FETCH_CONFIGURATION, effects.fetchConfiguration);
 }

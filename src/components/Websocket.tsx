@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { TodoistTaskRo } from '../interfaces/ro/todoist-task-ro.interface';
+import { TodoistTaskEventRo } from '../interfaces/ro/todoist-task-event-ro.interface';
 import { WebsocketConnection } from '../utils/websocket';
 
 function Websocket() {
-    const [task, setTask] = useState<TodoistTaskRo | undefined>();
+    const [task, setTask] = useState<TodoistTaskEventRo | undefined>();
 
     const socket = WebsocketConnection.getInstance();
 

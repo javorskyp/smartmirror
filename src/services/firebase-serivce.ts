@@ -34,7 +34,7 @@ export const fetchGoogleToken = async () => {
 }
 
 export const createUserWithEmailAndPassword = (data: CredentialsDto) => {
-    firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
+    return firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
         .then((result) => {
 
         })
