@@ -9,7 +9,7 @@ import { CredentialsDto } from '../../interfaces/dto/credentials-dto.interface';
 import { GoogleIcon } from '../../assets/GoogleIcon';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-
+import Spinner from '../../assets/Spinner';
 const LoginPage = (props) => {
   let history = useHistory();
 
@@ -23,10 +23,12 @@ const LoginPage = (props) => {
   }
 
   const SignupSchema = Yup.object().shape({
-    email: Yup.string().email('Invalid email').required('Required'),
+    email: Yup.string()
+    .email('Invalid email')
+    .required('Email is required'),
     password: Yup.string()
-      .min(1, 'Too Short!')
-      .required('Required')
+      .min(6, 'Password must be at least 6 characters')
+      .required('Password is required')
   });
 
   return (
@@ -51,19 +53,20 @@ const LoginPage = (props) => {
 
           <Form>
             <Field name="email" type="email" placeholder="Email" />
-            {errors.email && touched.email ? <div>{errors.email}</div> : null}
+            {errors.email && touched.email ? <label>{errors.email}</label> : null}
             <Field name="password" placeholder="Password" type="password" />
             {errors.password && touched.password ? (
               <div>{errors.password}</div>
             ) : null}
             <button type="submit">Login</button>
-            {props.isLoading && <div>Wczytywanie...</div>}
+            {props.isLoading && <Spinner/>}
           </Form>
         )}
       </Formik>
 
-      <Button onClick={handleGoogleSignIn} >
+      <Button onClick={handleGoogleSignIn}>
         <ButtonTitleDiv>
+          
           <GoogleIcon />
               Google Signin
           </ButtonTitleDiv>

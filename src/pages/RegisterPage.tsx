@@ -7,10 +7,12 @@ import * as Yup from 'yup';
 
 const RegisterPage = () => {
   const SignupSchema = Yup.object().shape({
-    email: Yup.string().email('Invalid email').required('Required'),
+    email: Yup.string()
+      .email('Invalid email')
+      .required('Email is required'),
     password: Yup.string()
-      .min(1, 'Too Short!')
-      .required('Required')
+      .min(5, 'Password must be at least 6 characters')
+      .required('Password is required')
   });
 
 
