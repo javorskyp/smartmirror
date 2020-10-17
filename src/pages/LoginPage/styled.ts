@@ -1,22 +1,30 @@
 import styled from 'styled-components'
 
+export const FormWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`;
+
 export const StyledForm = styled.div`
     display: flex;
-    align-items: center;
     flex-direction: column;
     margin-top: 50px;
 
     form {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         flex-direction: column;
         margin-top: 50px;
+        font-size: 14px;
+        color: rgb(255,0,0,0.9);
     
         input {
             font-size: 15px;
-            margin: 1em;
+            margin: 1em 0;
             height: 38px;
-            width: 235px;
+            width: 245px;
             padding: 10px;
             background: #000000 0% 0% no-repeat padding-box;
             border: 1px solid white;
@@ -31,11 +39,13 @@ export const StyledForm = styled.div`
         }
 
         button {
-            display: inline-block;
-            width: 235px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            width: 100%;
             height: 38px;
             font-size: 1em;
-            margin: 1em auto;
+            margin: 1em 0 1em;
+            margin-bottom: 10px;
             padding: 1px;
             border-radius: 1px;
             background: black;
@@ -80,10 +90,10 @@ opacity: 1;
 `
 export const Button = styled.button`
 display: inline-block;
-width: 235px;
+width: 245px;
 height: 38px;
 font-size: 1em;
-margin: 1em auto;
+margin: 1em 0 1em 0.3em;
 padding: 1px;
 border-radius: 1px;
 background: black;
