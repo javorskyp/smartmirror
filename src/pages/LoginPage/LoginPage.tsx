@@ -10,6 +10,7 @@ import { GoogleIcon } from '../../assets/GoogleIcon';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import Spinner from '../../components/Spinner/Spinner';
+
 const LoginPage = (props) => {
   let history = useHistory();
 

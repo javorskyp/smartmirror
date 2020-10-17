@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import RegisterPage from './pages/RegisterPage';
+import RegisterPage from './pages/RegisterPage/RegisterPage';
 import TodoistOauthRedirectPage from './pages/TodoistOauthRedirectPage';
 import AppStore from './pages/AppStore';
 import LoginPage from './pages/LoginPage/LoginPage';
