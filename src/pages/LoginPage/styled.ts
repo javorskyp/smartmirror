@@ -39,8 +39,9 @@ export const StyledForm = styled.div`
         }
 
         button {
-            display: inline-block;
-            width: 245px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            width: 100%;
             height: 38px;
             font-size: 1em;
             margin: 1em 0 1em;
