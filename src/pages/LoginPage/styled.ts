@@ -1,20 +1,24 @@
 import styled from 'styled-components'
 
+export const FormWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`;
+
 export const StyledForm = styled.div`
     display: flex;
-    align-items: center;
     flex-direction: column;
     margin-top: 50px;
 
     form {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         flex-direction: column;
         margin-top: 50px;
-        margin-left: 5px;
         font-size: 14px;
         color: rgb(255,0,0,0.9);
-
     
         input {
             font-size: 15px;
