@@ -18,7 +18,7 @@ export const StyledForm = styled.div`
     
         input {
             font-size: 15px;
-            margin: 1em 0 1em 0;
+            margin: 1em 0;
             height: 38px;
             width: 245px;
             padding: 10px;
