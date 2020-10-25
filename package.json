@@ -36,6 +36,17 @@
     "typescript": "~3.7.2",
     "yup": "^0.29.3"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "./src/*.{js,jsx,ts,tsx}": [
+      "npx prettier --write",
+      "eslint src/*.js --fix-dry-run"
+    ]
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -58,6 +69,11 @@
     ]
   },
   "devDependencies": {
+    "eslint": "^7.12.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.4.2",
+    "prettier": "^2.1.2",
     "redux-devtools": "^3.7.0"
   }
 }
