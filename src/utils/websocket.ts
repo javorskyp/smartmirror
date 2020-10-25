@@ -8,6 +8,7 @@ export const WebsocketConnection = (function () {
     function createInstance(): Stomp.Client {
         const sock = new SockJS(websocketUrl);
         return Stomp.over(sock);
+
     }
 
     return {
