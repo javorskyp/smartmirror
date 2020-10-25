@@ -7,13 +7,13 @@ function Websocket() {
 
     const socket = WebsocketConnection.getInstance();
 
-
     socket.connect({}, function (frame: any) {
-        socket.subscribe("/topic/jkwolanin@gmail.com", tasks => {
+        socket.subscribe('/topic/jkwolanin@gmail.com', (tasks) => {
             const task = JSON.parse(tasks.body);
+
             console.log(task);
             setTask(task);
-        })
+        });
     });
 
     return (
