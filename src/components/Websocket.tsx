@@ -7,6 +7,7 @@ function Websocket() {
 
     const socket = WebsocketConnection.getInstance();
 
+
     socket.connect({}, function (frame: any) {
         socket.subscribe("/topic/jkwolanin@gmail.com", tasks => {
             const task = JSON.parse(tasks.body);
