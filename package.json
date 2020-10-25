@@ -44,8 +44,9 @@
     }
   },
   "lint-staged": {
-    "*.{js,ts,tsx}": [
-      "eslint --fix"
+    "*.{ts, tsx}": [
+      "tslint --fix --config tslint.json --project tsconfig.json",
+      "git add"
     ]
   },
   "scripts": {
