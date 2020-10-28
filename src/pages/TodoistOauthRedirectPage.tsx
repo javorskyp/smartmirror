@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import * as todoistService from '../services/todoist-service';
 import { AccessTokenRo } from '../interfaces/ro/access-token-ro.interface';
 import { AxiosResponse } from 'axios';
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 
 const TodoistOauthRedirectPage = () => {
-    let history = useHistory();
+    const history = useHistory();
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
@@ -13,27 +13,18 @@ const TodoistOauthRedirectPage = () => {
 
         if (!code) {
             return;
+        }
+
+        const requestToken = async () => {
+            const response: AxiosResponse<AccessTokenRo> = await todoistService.requestAccessToken(code);
+            await todoistService.saveAccessToken(response.data.access_token);
+            history.push('/');
         };
 
-        todoistService.requestAccessToken(code)
-            .then((response: AxiosResponse<AccessTokenRo>) => {
-                return response.data.access_token;
-            })
-            .then(async (token: string) => {
-                todoistService.saveAccessToken(token);
-                history.push("/");
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        requestToken();
     }, []);
 
-    return (
-        <div>
-            ok
-        </div>
-    )
-
-}
+    return <div>ok</div>;
+};
 
 export default TodoistOauthRedirectPage;

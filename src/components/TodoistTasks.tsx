@@ -5,15 +5,22 @@ import * as todoistService from '../services/todoist-service';
 function TodoistTasks() {
     const [tasks, setTasks] = useState<TodoistTaskRo[]>();
     useEffect(() => {
-        todoistService.fetchTasks()
-            .then((response) => {
-                setTasks(response.data);
-            });
-    }, [])
+        const fetchData = async () => {
+            const response = await todoistService.fetchTasks();
+            setTasks(response.data);
+        };
+
+        fetchData();
+    }, []);
 
     return (
         <div>
-            { tasks?.map((task) => <div key={task.id}> {task.id} {task.content} <a href={task.url}>Link do zadania w Todoist</a> {task.created}</div>)}
+            {tasks?.map((task) => (
+                <div key={task.id}>
+                    {' '}
+                    {task.id} {task.content} <a href={task.url}>Link do zadania w Todoist</a> {task.created}
+                </div>
+            ))}
         </div>
     );
 }
