@@ -1,10 +1,12 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useContext, ReactElement } from 'react';
 import { CLIENT_ID, CLIENT_SECRET, SCOPE } from '../env';
 import { UpperLeftCorner, ULCTitle, TitleLineUp, TitleLineDown } from './LoginPage/styled';
 import { Link } from 'react-navi';
+import AuthContext from './../context/auth-context';
 
-const AppStore = (props) => {
+const AppStore: React.FC = (): ReactElement => {
+    const authContext = useContext(AuthContext);
+
     return (
         <div>
             <Link href="/">Go Back</Link>
@@ -15,20 +17,18 @@ const AppStore = (props) => {
             </UpperLeftCorner>
             <div>
                 <h4>Todoist</h4>
-                {!!props.configuration?.todoist ? <span>Połączono</span> : <a href={`https://todoist.com/oauth/authorize?client_id=${CLIENT_ID}&scope=${SCOPE}&state=${CLIENT_SECRET}`}>
-                    Połącz
-                </a>}
+                {authContext.authenticated ? (
+                    <span>Połączono</span>
+                ) : (
+                    <a
+                        href={`https://todoist.com/oauth/authorize?client_id=${CLIENT_ID}&scope=${SCOPE}&state=${CLIENT_SECRET}`}
+                    >
+                        Połącz
+                    </a>
+                )}
             </div>
-
         </div>
-    )
+    );
+};
 
-}
-
-const mapStateToProps = state => {
-    return {
-        configuration: state.authReducer.configuration
-    }
-}
-
-export default connect(mapStateToProps)(AppStore);
+export default AppStore;
